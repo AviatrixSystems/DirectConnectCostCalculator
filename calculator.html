@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"  integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet"  type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Jquery UI -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename = 'css/jquery-ui.css') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.css') }}">
+
+        <!-- Script Source -->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{{url_for('static', filename='js/slider.js')}}"></script>
+    <script type="text/javascript" src= {{ url_for('static', filename='js/calculator.js')}}> </script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+
+<body>
+  <title>Calculator</title>
+    <div class="container">
+      <div clas="row">
+        <div class="col-md-12">
+          <h2 class="section-heading" id= "AWS"> AWS Direct Connect vs Aviatrix</h2>
+          <hr>
+            <form>
+              <div class = "col-md-6">
+                <h3> Bandwidth </h3>
+                <br>
+                <table>
+                  <label class="radio-inline">
+                    <input type="radio" name="bandwidth" value=50 onchange=recalculate(this.form)>50M
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="bandwidth" value=100 onchange=recalculate(this.form)>100M
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="bandwidth" value=200 onchange=recalculate(this.form)>200M
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="bandwidth" value=300 onchange=recalculate(this.form)>300M
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="bandwidth" value=400 onchange=recalculate(this.form)>400M
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="bandwidth" value=500 onchange=recalculate(this.form)>500M
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="bandwidth" value=1000 onchange=recalculate(this.form)>1G
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="bandwidth" value=10000 onchange=recalculate(this.form)>10G
+                  </label>
+                    <br>
+                  <h3>Regions</h3>
+                  <br>
+                  <input type="checkbox" name="regions" onchange=recalculate(this.form)> us-west-1
+                  <input type="checkbox" name="regions" onchange=recalculate(this.form)> us-west-2
+                  <input type="checkbox" name="regions" onchange=recalculate(this.form)> us-east-1
+                  <input type="checkbox" name="regions" onchange=recalculate(this.form)> us-east-2
+                  <br>
+                  <h3>Providers</h3>
+                  <br>
+<!--                   <label class="radio-inline">
+                    <input type="radio" name="provider" onchange=recalculate(this.form)>Digital Realty
+                  </label> -->
+                  <label class="radio-inline">
+                    <input type="radio" name="provider" onchange=recalculate(this.form)>CoreSite
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="provider" onchange=recalculate(this.form)>Equinix
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="provider" onchange=recalculate(this.form)>AWS Direct Connect
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="provider" onchange=recalculate(this.form)>AT&T
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="provider" onchange=recalculate(this.form)>Verizon
+                  </label>
+                    <br>
+                  <h3> Utilization %</h3>
+                  <br>
+                  <!-- <div id="slider"></div>
+                  <span type = "number" id="slider-value" name = "utilization" onchange=recalculate(this.form)></span> -->
+                  <input type="number" name="utilization" value=20 onchange=recalculate(this.form)>
+                  <br>
+                  <h3> VPCs </h3>
+                  <br>
+                  <input type="number" name="number_vpc" value=1 onchange=recalculate(this.form)></td>
+                  <br>
+                  <tr>
+                    <h3> Encryption</h3>
+                    <td><input type="checkbox" name="dx_encryption_input" onchange=recalculate(this.form)> Yes</td>
+                  </tr>
+                </table>
+              </div>
+              <div class = "col-md-6">
+                <h3>Direct Connect Output</h3>
+                  <table border=1>
+                    <th>
+                      <td> Monthly</td>
+                      <td> Yearly</td>
+                    </th>
+                    <tr>
+                      <td>Bandwidth</td>
+                      <td><input type="number" name="dx_bandwidth_GB" disabled = "true">GB/m</td>
+                      <td>
+                    </tr>
+                    <tr>
+                      <td> Last Mile cost: </td>
+                      <td><input type="number" name="dx_last_mile" value=2500 onchange=dx_last_mile_year_script(this.form)>$/Month</td>
+                      <td><input type="number" name="dx_last_mile_year" disabled = "true">$/Year</td>
+                    </tr>
+                    <tr>
+                      <td> Port Hour Cost:</td>
+                      <td><input type="number" name="dx_port" value=21.60 onchange=dx_port_output_script(this.form)>$/Month</td>
+                      <td><input type="number" name="dx_port_year" disabled = "true">$/Year</td>
+                    </tr>
+                    <tr>
+                      <td> Data Transfer OUT:</td>
+                      <td><input type="number" name="dx_out" value="0.03" onchange=dx_out_output_script(this.form)>$/Month </td>
+                      <td><input type="number" name="dx_out_year" disabled = "true">$/Year</td>
+                    </tr>
+                    <tr>
+                      <td> Encryption:</td>
+                      <td><input type="number" name="dx_encryption" disabled = "true">$/Month</td>
+                      <td><input type="number" name="dx_encryption_year" disabled = "true">$/Year</td>
+                    </tr>
+                    <tr>
+                        <td>Total Cost:</td>
+                        <td><input type="number" name="dx_total">$/Month</td>
+                        <td><input type="number" name="dx_total_year">$/Year</td>
+                    </tr>
+                  </table>
+                  <br>
+                <h3>Aviatrix Output</h3>
+                  <table border=1>
+                    <th>
+                      <td> Monthly</td>
+                      <td> Yearly</td>
+                    </th>
+                    <tr>
+                    <tr>
+                      <td>Bandwidth: </td>
+                      <td><input type="number" name="avx_bandwidth_GB" disabled = "true">GB/m</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td> Number of tunnels: </td>
+                      <td> <input type="number" name="number_tunnels" onchange=regions_output_script(this.form)>                       </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td> Instance type:  </td>
+                      <td>    <input type="text" name="avx_instance_type_output" > </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td> Instance Cost:   </td>
+                      <td>   <input type="number" name="avx_instance">$/Month </td>
+                      <td>   <input type="number" name="avx_instance_year">$/Year </td>
+                    </tr>
+                    <tr>
+                      <td> Aviatrix Licensing:</td>
+                      <td><input type="number" name="avx_licensing">$/Month                      </td>
+                      <td><input type="number" name="avx_licensing_year">$/Year                     </td>
+                    </tr>
+                    <tr>
+                      <td> DIA Cost:</td>
+                      <td><input type="number" name="avx_dia">$/Month                              </td>
+                      <td><input type="number" name="avx_dia_year">$/Year                              </td>
+                    </tr>
+                    <tr>
+                      <td> Data Transfer OUT:</td>
+                      <td> <input type="number" name="avx_out">$/Month </td>
+                      <td> <input type="number" name="avx_out_year">$/Year </td>
+                    </tr>
+                    <tr>
+                        <td>Total Cost:</td>
+                        <td><input type="number" name="avx_total">$/Month</td>
+                        <td><input type="number" name="avx_total_year">$/Year</td>
+                    </tr>
+                    </table>
+                  </div>
+                </table>
+            </form>
+          </div>
+        </div>
+    </div>
+  </div>
+  <br>
+  <br>
+<!--   <div class="container">
+    <div class ="row">
+      <div class = "col-md-12">
+        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      </div>
+    </div>
+  </div> -->
+
+  <script>
+    Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Monthly Average Rainfall'
+    },
+    xAxis: {
+        categories: [
+            'Bandwidth',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: '$'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Tokyo',
+        data: [49.9]
+
+    }, {
+        name: 'New York',
+        data: [83]
+
+    },]
+});
+  </script>
+</body>
+</html>
